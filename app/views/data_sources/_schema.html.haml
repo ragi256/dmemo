@@ -2,6 +2,15 @@
   %h2.box-title Schema Candidates
 
 .box-body
+  %p
+    Schema Candidates is a whitelist of schemas to be imported. Only
+    %span.label.label-success subscribe
+    status schemas will be imported by batch. Click the Import button to add a schema to the whitelist.
+  %p
+    This schemas list is retrieved from
+    %code svv_all_schemas
+    , so it has no effect on search_path or Ignored Tables on the setting page.
+
   %table.table.table-hover.table-bordered.table-striped{ role: "grid" }
     %tr
       %th schema name
