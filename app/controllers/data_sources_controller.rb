@@ -31,15 +31,15 @@ class DataSourcesController < ApplicationController
     @data_source = DataSource.find(id)
 
     if @data_source.adapter == 'redshift'
-      @redshift_schemas = @data_source.data_source_adapter.fetch_schemas
+      @redshift_schemas = @data_source.data_source_adapter.fetch_schemas # [[schema_name, schema_owner], ...]
       @redshift_schema_names = @redshift_schemas.map(&:first)
 
       @imported_schema_memos = @data_source.database_memo.schema_memos
       @subscribe_schema_names = @imported_schema_memos.where(linked: true).map(&:name)
 
       @only_dmemo_schema_names = @imported_schema_memos.pluck(:name) - @redshift_schema_names
-      @only_dmemo_schemas = @only_dmemo_schema_names.map{|s| [s, 'unknown', 'unkown']}
-      @all_schemas = (@redshift_schemas + @only_dmemo_schemas).sort_by{|s| s[0]} # s[0] is schema name
+      @only_dmemo_schemas = @only_dmemo_schema_names.map{|s| [s, 'unknown']}
+      @all_schemas = (@redshift_schemas + @only_dmemo_schemas)
     end
 
     @data_source.password = DUMMY_PASSWORD
