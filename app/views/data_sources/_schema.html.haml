@@ -8,7 +8,13 @@
     status schemas will be imported by batch. Click the Import button to add a schema to the whitelist.
   %p
     This schemas list is retrieved from
-    %code svv_all_schemas
+    - case @data_source.adapter
+      - when 'postgresql'
+        %code pg_catalog.pg_namespace
+      - when 'mysql2'
+        %code database_name
+      - when 'redshift'
+        %code pg_catalog.pg_namespace
     , so it has no effect on search_path or Ignored Tables on the setting page.
 
   %table.table.table-hover.table-bordered.table-striped{ role: "grid" }

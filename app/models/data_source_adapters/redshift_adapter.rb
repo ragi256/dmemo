@@ -2,7 +2,7 @@ require "active_record/connection_adapters/redshift_adapter"
 
 module DataSourceAdapters
   class RedshiftAdapter < StandardAdapter
-    def fetch_schemas
+    def fetch_schema_names
       @schema_names ||= source_base_class.connection.query(<<~SQL, 'SCHEMA')
         SELECT nspname as schema_name, usename as owner_name
         FROM pg_catalog.pg_namespace s join pg_catalog.pg_user u on u.usesysid = s.nspowner
