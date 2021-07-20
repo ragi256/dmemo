@@ -7,7 +7,7 @@ class ImportSchemaRawDatasets
     schema_memo = data_source.database_memo.schema_memos.find_by!(name: schema_name)
 
     source_tables.each do |source_table|
-      table_memo = schema_memo.table_memos.find_or_create_by(name: source_table.table_name)
+      table_memo = schema_memo.table_memos.find_or_create_by!(name: source_table.table_name)
       begin
         ImportTableRawDatasets.import_table_memo_raw_dataset!(table_memo, source_table)
       rescue DataSource::ConnectionBad => e

@@ -21,7 +21,7 @@ class ImportSchemaDefinitions
 
   def self.import_table_memos!(source_tables, table_memos)
     source_tables.each do |source_table|
-      table_memo = table_memos.find_or_create_by(name: source_table.table_name)
+      table_memo = table_memos.find_or_create_by!(name: source_table.table_name)
       table_memo.update!(linked: true)
       begin
         ImportTableDefinitions.import_column_memos!(source_table, table_memo)
